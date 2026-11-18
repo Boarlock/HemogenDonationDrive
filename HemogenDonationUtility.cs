@@ -3,26 +3,21 @@ using Verse;
 
 namespace HemogenDonation;
 
-public static class HemogenDonationUtility
-{
-    public static bool CanBeQueuedForDonation(Pawn pawn)
-    {
+public static class HemogenDonationUtility {
+
+    internal static bool IsEligibleDonor(Pawn pawn) {
 
         if (ModStartup.modActive == true &&
-            pawn.Spawned &&
-            pawn.BillStack is not null &&
-            !pawn.BillStack.Bills.Any(x => x.recipe == RecipeDefOf.ExtractHemogenPack || x.recipe == DefOf_Donation.ExtractHemogenPack_HemogenDonation) &&
-            PawnConsciousEnoughForDonation(pawn) &&
-            DefOf_Donation.ExtractHemogenPack_HemogenDonation!.Worker.AvailableOnNow(pawn)) {
+            pawn.Spawned && !pawn.Downed && !pawn.Drafted &&
+            !pawn.DevelopmentalStage.Baby() &&
+            pawn.health.CanBleed &&
+            !(pawn.genes?.HasActiveGene(GeneDefOf.Hemogenic) ?? false) &&
+            !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss) &&
+            pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) > 0.45f) {
 
-            return !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss);
+            return true;
         }
 
         return false;
-    }
-
-    public static bool PawnConsciousEnoughForDonation(Pawn pawn) {
-
-        return pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) > 0.45f;
     }
 }

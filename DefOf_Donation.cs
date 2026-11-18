@@ -4,8 +4,11 @@ using Verse;
 namespace HemogenDonation;
 
 [DefOf]
-public static class DefOf_Donation
-{
+public static class DefOf_Donation {
+
+    [MayRequireBiotech]
+    public static ThingDef? DonationChair;
+
     [MayRequireBiotech]
     public static RecipeDef? ExtractHemogenPack_HemogenDonation;
 
@@ -16,6 +19,9 @@ public static class DefOf_Donation
 
     [MayRequireBiotech]
     public static PreceptDef? Bloodfeeders_Revered;
+
+    [MayRequireBiotech]
+    public static JobDef? DoHemogenDonationBill;
 
     static DefOf_Donation() {
 
