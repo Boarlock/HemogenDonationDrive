@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  
+  <!-- TargetA is Chair, TargetB is Donor, TargetC is Doctor -->
+  <JobDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>HookupDonor</defName>
+    <driverClass>HemogenDonation.JobDriver_HookupDonor</driverClass>
+    <reportString>hooking up TargetB.</reportString> 
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+    <neverFleeFromEnemies>false</neverFleeFromEnemies>
+	<collideWithPawns>true</collideWithPawns>
+	<isIdle>false</isIdle>
+  </JobDef>
+  
+  <JobDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>DonateHemogen</defName>
+    <driverClass>HemogenDonation.JobDriver_DonateHemogen</driverClass>
+    <reportString>donating hemogen.</reportString> 
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+    <neverFleeFromEnemies>false</neverFleeFromEnemies>
+	<collideWithPawns>true</collideWithPawns>
+	<isIdle>false</isIdle>
+	<taleOnCompletion>DonatedHemogen</taleOnCompletion>
+  </JobDef>
+  
+  </Defs>

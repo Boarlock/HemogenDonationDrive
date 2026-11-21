@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef MayRequire="Ludeon.RimWorld.Biotech">
+    <!-- General -->
+    <defName>ExtractHemogenPack_HemogenDonation</defName>
+    <label>extract hemogen pack</label>
+    <description>Extract a hemogen pack from the donor. The operation will fail to produce a hemogen pack if the donor does not have enough blood.\n\nHemogen packs can be administered to others to reduce blood loss or to satiate those who feed on blood.</description>
+    <jobString>Extracting hemogen pack.</jobString>
+	
+	<!-- Requirements -->
+	<workSkill>Medicine</workSkill>
+	<skillRequirements>
+      <Medicine>6</Medicine> 
+    </skillRequirements>
+	
+	<!-- Misc -->
+	<products>
+	  <HemogenPack>1</HemogenPack>
+	</products>
+    <workSkillLearnFactor>2</workSkillLearnFactor>
+	<requiredGiverWorkType>Doctor</requiredGiverWorkType>
+	<effectWorking>Surgery</effectWorking> <!-- Visual effect while working -->
+    <soundWorking>Recipe_Surgery</soundWorking> <!-- Audio while working -->
+  </RecipeDef>
+
+</Defs>

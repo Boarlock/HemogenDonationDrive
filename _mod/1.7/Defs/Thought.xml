@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  
+  <!-- Standard Voluntary Donor Thought -->
+  <ThoughtDef>
+    <defName>DonatedHemogenVoluntarily</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+	<nullifyingPrecepts>
+	  <li MayRequire="Ludeon.RimWorld.Biotech">Bloodfeeders_Reviled</li> 
+	</nullifyingPrecepts>
+    <nullifyingTraits>
+      <li>Psychopath</li>
+    </nullifyingTraits>
+    <stages>
+      <li>
+        <label>donated hemogen</label>
+        <description>I willingly gave some of my blood to help the colony. It makes me feel proud, even if I'm a little lightheaded.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <!-- For Bloodlust Pawns -->
+  <ThoughtDef>
+    <defName>DonatedHemogenBloodlust</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <requiredTraits>
+      <li>Bloodlust</li>
+    </requiredTraits>
+    <stages>
+      <li>
+        <label>shared the crimson</label>
+        <description>Watching my own blood fill that pack was strangely thrilling.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <!-- For Bloodfeeder-Revering Ideologies -->
+  <ThoughtDef>
+    <defName>DonatedHemogenRevered</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>2.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>offered sacred hemogen</label>
+        <description>I freely offered my lifeblood to sustain our exalted bloodfeeders. I am blessed.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+ </Defs>

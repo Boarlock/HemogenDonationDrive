@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Hemogen Donation Drive</name>
+  <author>Boarlock</author>
+  <packageId>boarlock.hemogendonation</packageId>
+  <modVersion>1.0.0</modVersion>
+  <url>https://github.com/Boarlock/HemogenDonationDrive</url>
+  <supportedVersions>
+    <li>1.7</li>
+  </supportedVersions>
+  <loadAfter>
+    <li>Ludeon.RimWorld.Biotech</li>
+  </loadAfter>
+  <modDependencies>
+    <li>
+      <packageId>Ludeon.RimWorld.Biotech</packageId>
+      <displayName>Biotech</displayName>
+    </li>
+  </modDependencies>
+  <description>A mod allowing colonists to voluntarily donate hemogen, complete with custom moodlets, trait reactions, and ideological integration.
+
+Credit for the donation chair and IV stand is provided in the separate CREDIT.md file.</description>
+</ModMetaData>

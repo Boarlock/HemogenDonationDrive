@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <TaleDef>
+    <!-- Requirements -->
+    <defName>DonatedHemogen</defName>
+    <label>hemogen donated</label>
+    <taleClass>Tale_SinglePawn</taleClass>
+	
+	<!-- Expires -->
+	<type>Expirable</type>
+    <baseInterest>1.0</baseInterest>
+	<maxPerPawn>1</maxPerPawn>
+	<expireDays>20</expireDays>
+	
+	<!-- Tale -->
+    <rulePack>
+      <rulesStrings>
+        <li>tale_noun->[PAWN_nameDef]'s hemogen donation</li>
+        <li>image->[PAWN_nameFull] [donate_gerund] hemogen [circumstance_group]</li>
+		<li>donate_gerund->donating</li>
+		<li>donate_gerund->giving</li>
+		<li>circumstance_phrase->with a steady hand</li>
+		<li>circumstance_phrase->without a hint of fear</li>
+		<li>circumstance_phrase->while others look on</li>
+		<li>desc_sentence->[PAWN_nameDef] is reclined in a padded chair with a tube in [PAWN_possessive] arm.</li>
+		<li>desc_sentence->A pack slowly fills with dark red hemogen beside [PAWN_nameDef].</li>
+      </rulesStrings>
+    </rulePack>
+  </TaleDef>
+  
+</Defs>
