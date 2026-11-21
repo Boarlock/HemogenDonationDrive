@@ -6,15 +6,16 @@ namespace HemogenDonation;
 
 public class WorkGiver_DoHemogenDonationBill : WorkGiver_Scanner {
 
-    public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
+    private static readonly IntRange ReCheckFailedBillTicksRange = new(500, 600);
 
-    public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForDef(DefOf_Donation.DonationChair);
+    public override PathEndMode PathEndMode => PathEndMode.InteractionCell;
+    public override ThingRequest PotentialWorkThingRequest => ThingRequest.ForDef(DefOf_Donation.DonorChair);
 
     public override bool ShouldSkip(
         Pawn pawn, 
         bool forced = false) {
 
-        List<Thing> chairs = pawn.Map.listerThings.ThingsOfDef(DefOf_Donation.DonationChair);
+        List<Thing> chairs = pawn.Map.listerThings.ThingsOfDef(DefOf_Donation.DonorChair);
 
         for (int i = 0; i < chairs.Count; i++) {
 
@@ -51,14 +52,17 @@ public class WorkGiver_DoHemogenDonationBill : WorkGiver_Scanner {
         return StartOrResumeBillJob(pawn, billGiver, forced);
     }
 
-    private static readonly IntRange ReCheckFailedBillTicksRange = new(500, 600);
-
     private Job? StartOrResumeBillJob(
         Pawn doctor, 
         IBillGiver giver, 
         bool forced = false) {
 
         Thing chair = (Thing)giver;
+
+        if (chair.TryGetComp<CompDonation>() is not { } chairComp ||
+            chairComp.IsActive)
+            return null;
+
         bool makingFloatMenu = FloatMenuMakerMap.makingFor == doctor;
 
         for (int i = 0; i < giver.BillStack.Count; i++) {
@@ -94,19 +98,18 @@ public class WorkGiver_DoHemogenDonationBill : WorkGiver_Scanner {
                 continue;
             }
 
-            Job job = JobMaker.MakeJob(DefOf_Donation.DoHemogenDonationBill, chair, donor);
-            job.bill = bill;
-            return job;
+            Job hookupJob = JobMaker.MakeJob(DefOf_Donation.HookupDonor, chair, donor, doctor);
+            hookupJob.bill = bill;
+            return hookupJob;
         }
 
         return null;
     }
 
-    private Pawn? FindDonor(
+    private static Pawn? FindDonor(
         Pawn doctor, 
         Thing chair, 
-        bool forced)
-    {
+        bool forced) {
 
         Pawn? best = null;
         int bestDist = int.MaxValue;

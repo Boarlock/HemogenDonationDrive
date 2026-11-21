@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using Verse;
+﻿using Verse;
 
 namespace HemogenDonation;
+
+public enum DonationStage { Idle, Called, Seated, HookedUp }
 
 public class CompProperties_Donation : CompProperties {
 
@@ -19,23 +20,27 @@ public class CompDonation : ThingComp {
     // Typed access to our CompProperties
     public CompProperties_Donation Props => (CompProperties_Donation)props;
 
-    private bool isActive;
-    private int ticksToComplete;
+    private DonationStage stage;
+    private Pawn? doctor, donor;
 
-    private const int progressBarCells = 20;
-    private int progressBarFilled = -1;
-    private string? progressBar;
+    public Pawn? Doctor => doctor;
+    public Pawn? Donor => donor;
+    public DonationStage Stage => stage;
+    public bool IsActive => stage != DonationStage.Idle;
 
-    private void CompleteDonation() {
-
-        progressBar = null;
-        progressBarFilled = -1;
-        isActive = false;
+    public void Begin(Pawn doc, Pawn don) { 
+        
+        doctor = doc; 
+        donor = don; 
+        stage = DonationStage.Called; 
     }
 
-    private void CancelDonation() {
+    public void Advance(DonationStage s) => stage = s;
+    public void Reset() { 
 
-        CompleteDonation();
+        stage = DonationStage.Idle; 
+        doctor = donor = null; 
+    
     }
 
     // Called after the thing is spawned on the map
@@ -43,37 +48,12 @@ public class CompDonation : ThingComp {
 
         base.PostSpawnSetup(respawningAfterLoad);
 
-
     }
 
     public override void CompTick() {
 
         base.CompTick();
 
-        if (!isActive) 
-            return;
-
-        if (ticksToComplete <= 0) {
-
-            CompleteDonation(); // apply blood loss, drop pack, then FinishDonation()
-            return;
-        }
-
-        ticksToComplete--;
-
-        int total = Props.ticksToExtract;
-        int elapsed = total - ticksToComplete;
-        float fraction = total > 0 ? Mathf.Clamp01((float)elapsed / total) : 0f;
-        int filled = Mathf.FloorToInt(fraction * progressBarCells);
-
-        if (filled != progressBarFilled) {
-
-            progressBarFilled = filled;
-            progressBar = "Donation Progress\n["
-                + new string('█', filled)
-                + new string('░', progressBarCells - filled)
-                + "] " + Mathf.FloorToInt(fraction * 100f) + "%";
-        }
     }
 
     // Serialization for save/load
@@ -81,22 +61,20 @@ public class CompDonation : ThingComp {
 
         base.PostExposeData();
 
-        Scribe_Values.Look(ref isActive, "active", false);
-        Scribe_Values.Look(ref ticksToComplete, "toComplete", 0);
+        Scribe_Values.Look(ref stage, "stage", DonationStage.Idle);
+        Scribe_References.Look(ref doctor, "doctor");
+        Scribe_References.Look(ref donor, "donor");
     }
-
-    public override string? CompInspectStringExtra() => progressBar;
 
     // Add UI buttons when selected
     public override IEnumerable<Gizmo> CompGetGizmosExtra() {
 
-        if (isActive) {
+        if (IsActive) {
 
-            yield return new Command_Action
-            {
+            yield return new Command_Action {
 
                 defaultLabel = "Cancel Operation",
-                action = () => CancelDonation()
+                action = () => Reset()
             };
         }
     }

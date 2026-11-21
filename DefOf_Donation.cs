@@ -7,7 +7,7 @@ namespace HemogenDonation;
 public static class DefOf_Donation {
 
     [MayRequireBiotech]
-    public static ThingDef? DonationChair;
+    public static ThingDef? DonorChair;
 
     [MayRequireBiotech]
     public static RecipeDef? ExtractHemogenPack_HemogenDonation;
@@ -21,7 +21,9 @@ public static class DefOf_Donation {
     public static PreceptDef? Bloodfeeders_Revered;
 
     [MayRequireBiotech]
-    public static JobDef? DoHemogenDonationBill;
+    public static JobDef? HookupDonor;
+    [MayRequireBiotech]
+    public static JobDef? DonateHemogen;
 
     static DefOf_Donation() {
 
